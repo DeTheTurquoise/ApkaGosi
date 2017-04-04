@@ -2,4 +2,16 @@
     <string name="app_name">ApkaGosi</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
+    <string name="start_button">Rozpocznij przygodę</string>
+    <string name="next_button">Dalej</string>
+    <string name="previous_button">Cofnij</string>
+
+
+    <string name="kpt1">Podobnie jak i wiele innych postaci z książek Milne’a, Kubuś Puchatek został nazwany imieniem jednej z zabawek Christophera Robina Milne’a (1920-1996), syna pisarza.</string>
+    <string name="kpt2">Z kolei pluszowa zabawka Christophera została nazwana tak od imienia niedźwiedzicy Winnipeg będącej żywą maskotką kanadyjskiego wojska z Korpusu Weterynaryjnego Kanady.</string>
+    <string name="kpt3">Została kupiona za 27 dolarów przez porucznika Iana Gary’ego w miasteczku White River w Ontario, gdzie dziś znajduje się pomnik misia.</string>
+    <string name="kpt4">W październiku 1914 r. została przewieziona do Wielkiej Brytanii.</string>
+    <string name="kpt5">Postanowiono pozostawić ją w londyńskim ogrodzie zoologicznym.</string>
+    <string name="kp_start_button">Kubuś Puchatek</string>
+
 </resources>
