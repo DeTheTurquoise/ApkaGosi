@@ -6,6 +6,10 @@
     <string name="next_button">Dalej</string>
     <string name="previous_button">Cofnij</string>
 
+    <string name="menu_story">Historia</string>
+    <string name="menu_lesson">Lekcja</string>
+    <string name="menu_main">Samuraj</string>
+
 
     <string name="kpt1">Podobnie jak i wiele innych postaci z książek Milne’a, Kubuś Puchatek został nazwany imieniem jednej z zabawek Christophera Robina Milne’a (1920-1996), syna pisarza.</string>
     <string name="kpt2">Z kolei pluszowa zabawka Christophera została nazwana tak od imienia niedźwiedzicy Winnipeg będącej żywą maskotką kanadyjskiego wojska z Korpusu Weterynaryjnego Kanady.</string>
@@ -13,5 +17,19 @@
     <string name="kpt4">W październiku 1914 r. została przewieziona do Wielkiej Brytanii.</string>
     <string name="kpt5">Postanowiono pozostawić ją w londyńskim ogrodzie zoologicznym.</string>
     <string name="kp_start_button">Kubuś Puchatek</string>
+
+
+    <string name="l1ln1">Lekcja pierwsza</string>
+    <string name="l1ln2">Lekcja pierwsza</string>
+    <string name="l1ln3">Lekcja pierwsza</string>
+    <string name="l1ss1">A</string>
+    <string name="l1ss2">B</string>
+    <string name="l1ss3">I</string>
+    <string name="l1sr1">a</string>
+    <string name="l1sr2">b</string>
+    <string name="l1sr3">i</string>
+    <string name="l1sh1">A zwichnęło nóżki</string>
+    <string name="l1sh2">B obiło brzuszki</string>
+    <string name="l1sh3">I zgubiło kropeczkę</string>
 
 </resources>

@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
     android:baselineAligned="false"
     android:layout_alignParentBottom="true"
-    android:id="@+id/fluff_screen_id"
-    tools:context="dmm.apkagosi.Fluff">
+    android:id="@+id/fluff_screen_id">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="340dp"
-        app:srcCompat="@color/colorAccent"
         android:id="@+id/fluff_image"
         android:layout_weight="0"/>
 
@@ -35,13 +32,13 @@
         android:layout_height="50dp"
         android:id="@+id/next"
         android:layout_marginLeft="200dp"
-        android:onClick="nextPage"/>
+        android:onClick="nextStoryPage"/>
 
     <Button
         android:text="@string/previous_button"
         android:layout_width="198dp"
         android:layout_height="50dp"
         android:id="@+id/previous"
-        android:onClick="previousPage"/>
+        android:onClick="previousStoryPage"/>
     </RelativeLayout>
 </LinearLayout>

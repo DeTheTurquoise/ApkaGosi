@@ -12,6 +12,6 @@
         android:layout_gravity="bottom"
         android:id="@+id/kubus_button"
         android:text="@string/kp_start_button"
-        android:onClick="kubusPuchatek"/>/>
+        android:onClick="kubusPuchatek"/>
 
 </LinearLayout>
