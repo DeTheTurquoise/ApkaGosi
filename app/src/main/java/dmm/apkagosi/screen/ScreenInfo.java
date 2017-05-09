@@ -9,6 +9,14 @@ public class ScreenInfo {
     public ScreenInfo() {
     }
 
+
+    private String storyPrefix;
+    private int storyPageLimit;
+
+    private String lessonNumber;
+    private int lessonPageLimit;
+
+
     public String getStoryPrefix() {
         return storyPrefix;
     }
@@ -17,16 +25,13 @@ public class ScreenInfo {
         this.storyPrefix = storyPrefix;
     }
 
-    public int getPageLimit() {
-        return pageLimit;
+    public int getStoryPageLimit() {
+        return storyPageLimit;
     }
 
-    public void setPageLimit(int pageLimit) {
-        this.pageLimit = pageLimit;
+    public void setStoryPageLimit(int storyPageLimit) {
+        this.storyPageLimit = storyPageLimit;
     }
-
-    private String storyPrefix;
-    private int pageLimit;
 
     public String getLessonNumber() {
         return lessonNumber;
@@ -36,5 +41,12 @@ public class ScreenInfo {
         this.lessonNumber = lessonNumber;
     }
 
-    private String lessonNumber;
+
+    public int getLessonPageLimit() {
+        return lessonPageLimit;
+    }
+
+    public void setLessonPageLimit(int lessonPageLimit) {
+        this.lessonPageLimit = lessonPageLimit;
+    }
 }

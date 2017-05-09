@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import dmm.apkagosi.R;
 import dmm.apkagosi.screen.ScreenInfo;
@@ -19,10 +17,26 @@ import dmm.apkagosi.screen.ScreenInfo;
 
 public class GeneralActivity extends AppCompatActivity{
 
-    protected int pageCounter;
-    protected int currentPage;
-    protected String storyPrefix;
-    protected String lessonPrefix;
+    protected ScreenInfo screenInfo = new ScreenInfo();
+
+    public int getPageCounter() {
+        return pageCounter;
+    }
+
+    public void setPageCounter(int pageCounter) {
+        this.pageCounter = pageCounter;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    private int pageCounter = 1;
+    private int currentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +53,6 @@ public class GeneralActivity extends AppCompatActivity{
         return selectItem(item);
     }
 
-    protected void setRepeatableScreenValues(ScreenInfo info){
-        pageCounter = info.getPageLimit();
-        currentPage = 1;
-    }
 
     protected void setNextPage() {
         if (currentPage < pageCounter) {
@@ -90,7 +100,7 @@ public class GeneralActivity extends AppCompatActivity{
     public boolean selectItem(MenuItem item) {
     switch (item.getItemId()) {
         case R.id.menu_item_main:
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, ProfileActivity.class));
             return true;
         case R.id.menu_item_lesson:
             startActivity(new Intent(this, LessonActivity.class));

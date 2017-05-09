@@ -6,7 +6,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import dmm.apkagosi.R;
-import dmm.apkagosi.screen.ScreenInfo;
 
 /**
  * Created by ddabrowa on 2017-04-05.
@@ -14,29 +13,14 @@ import dmm.apkagosi.screen.ScreenInfo;
 
 public class LessonActivity extends GeneralActivity {
 
-    ScreenInfo lessonInfo = new ScreenInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lesson_screen);
 
-        setLesson();
-
-        startLessonScreen(lessonInfo);
-        setMaxProgressBarValue(pageCounter);
+        setMaxProgressBarValue(getPageCounter());
         displayLessonScreen();
-    }
-
-
-    private void setLesson(){
-        lessonInfo.setPageLimit(3);
-        lessonInfo.setLessonNumber("l1");
-    }
-
-    protected void startLessonScreen(ScreenInfo info){
-        lessonPrefix = info.getLessonNumber();
-        setRepeatableScreenValues(info);
     }
 
     public void previousLessonPage(View view){
@@ -56,6 +40,7 @@ public class LessonActivity extends GeneralActivity {
 
 
     private void displayLessonScreen() {
+        setPageCounter(screenInfo.getLessonPageLimit());
 
         TextView lessonNumber = (TextView) findViewById(R.id.lesson_number);
         TextView symbolSign = (TextView) findViewById(R.id.symbol);
@@ -63,11 +48,11 @@ public class LessonActivity extends GeneralActivity {
         TextView symbolHelp = (TextView) findViewById(R.id.help_text);
         SeekBar lessonProgress = (SeekBar) findViewById(R.id.progress);
 
-        lessonNumber.setText(displayTextOnTextView(lessonPrefix,"ln"));
-        symbolSign.setText(displayTextOnTextView(lessonPrefix,"ss"));
-        symbolReading.setText(displayTextOnTextView(lessonPrefix,"sr"));
-        symbolHelp.setText(displayTextOnTextView(lessonPrefix, "sh"));
-        lessonProgress.setProgress(currentPage - 1);
+        lessonNumber.setText(displayTextOnTextView(screenInfo.getLessonNumber(),"ln"));
+        symbolSign.setText(displayTextOnTextView(screenInfo.getLessonNumber(),"ss"));
+        symbolReading.setText(displayTextOnTextView(screenInfo.getLessonNumber(),"sr"));
+        symbolHelp.setText(displayTextOnTextView(screenInfo.getLessonNumber(), "sh"));
+        lessonProgress.setProgress(getCurrentPage() - 1);
 
         setPreviousAndNextButton();
     }
