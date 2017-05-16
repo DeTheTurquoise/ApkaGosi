@@ -12,12 +12,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import dmm.apkagosi.activities.FluffActivity;
+import dmm.apkagosi.activities.StoryActivity;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FluffActivityTest {
 
-    private FluffActivity fluffActivity;
+    private StoryActivity fluffActivity;
     private static final String FAKE_STRING = "HELLO WORLD";
 
     @Mock

@@ -19,6 +19,11 @@ public class GeneralActivity extends AppCompatActivity{
 
     protected ScreenInfo screenInfo = new ScreenInfo();
 
+//    private Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
+//    private Intent storyActivityIntent = new Intent(this, StoryActivity.class);
+//    private Intent lessonActivityIntent = new Intent(this, LessonActivity.class);
+
+
     public int getPageCounter() {
         return pageCounter;
     }
@@ -100,13 +105,25 @@ public class GeneralActivity extends AppCompatActivity{
     public boolean selectItem(MenuItem item) {
     switch (item.getItemId()) {
         case R.id.menu_item_main:
-            startActivity(new Intent(this, ProfileActivity.class));
+            Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
+            startActivity(profileActivityIntent);
             return true;
         case R.id.menu_item_lesson:
-            startActivity(new Intent(this, LessonActivity.class));
+            Intent lessonActivityIntent = new Intent(this, LessonActivity.class);
+            lessonActivityIntent.putExtra(screenInfo.LESSON_PREFIX,"l1");
+            lessonActivityIntent.putExtra(screenInfo.LESSON_LIMIT,3);
+            startActivity(lessonActivityIntent);
             return true;
         case R.id.menu_item_story:
-            startActivity(new Intent(this, FluffActivity.class));
+            Intent storyActivityIntent = new Intent(this, StoryActivity.class);
+            storyActivityIntent.putExtra(screenInfo.STORY_PREFIX,"kp");
+            storyActivityIntent.putExtra(screenInfo.STORY_LIMIT,5);
+            startActivity(storyActivityIntent);
+            return true;
+        case R.id.menu_item_text:
+            Intent textActivityIntent = new Intent(this, LongStoryActivity.class);
+            textActivityIntent.putExtra(screenInfo.LONG_TEXT, "ct");
+            startActivity(textActivityIntent);
             return true;
         default:
             return super.onOptionsItemSelected(item);

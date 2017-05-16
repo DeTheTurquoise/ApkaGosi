@@ -17,7 +17,7 @@
 
         </activity>
 
-        <activity android:name=".activities.FluffActivity"
+        <activity android:name=".activities.StoryActivity"
         android:parentActivityName=".activities.MainActivity" >
 
         <intent-filter>
@@ -44,6 +44,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
+        </activity>
+
+        <activity android:name=".activities.LongStoryActivity"
+            android:parentActivityName=".activities.MainActivity" >
+
         </activity>
 
         <uses-feature android:glEsVersion="0x00020000" android:required="true" />

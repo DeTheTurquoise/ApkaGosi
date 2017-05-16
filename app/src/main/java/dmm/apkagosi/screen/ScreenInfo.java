@@ -9,12 +9,18 @@ public class ScreenInfo {
     public ScreenInfo() {
     }
 
+    public static final String LESSON_PREFIX = "dmm.apkagosi.LESSON_PREFIX";
+    public static final String LESSON_LIMIT = "dmm.apkagosi.LESSON_LIMIT";
+    public static final String STORY_PREFIX = "dmm.apkagosi.STORY_PREFIX";
+    public static final String STORY_LIMIT = "dmm.apkagosi.STORY_LIMIT";
+    public static final String LONG_TEXT = "dmm.apkagosi.LONG_TEXT";
 
-    private String storyPrefix;
-    private int storyPageLimit;
 
-    private String lessonNumber;
-    private int lessonPageLimit;
+    private String storyPrefix ="";
+    private int storyPageLimit = 1;
+
+    private String lessonNumber = "";
+    private int lessonPageLimit = 1;
 
 
     public String getStoryPrefix() {

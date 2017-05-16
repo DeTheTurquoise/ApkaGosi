@@ -1,8 +1,8 @@
 package dmm.apkagosi.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import dmm.apkagosi.R;
+import android.util.Log;
 
 public class MainActivity extends GeneralActivity{
 
@@ -10,21 +10,24 @@ public class MainActivity extends GeneralActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setStoryScreen();
-        setLessonScreen();
-//        Intent intent = new Intent(this, ProfileActivity.class);
-//        startActivity(intent);
+        //setContentView(R.layout.activity_main);
+        Intent profileIntent = new Intent(this, ProfileActivity.class);
+        setStoryScreen(profileIntent);
+        setLessonScreen(profileIntent);
+        Log.i("Info","MainActivity created");
+        startActivity(profileIntent);
+//        Intent profileIntent = new Intent(this, ProfileActivity.class);
+//        startActivity(profileIntent);
     }
 
-    private void setStoryScreen(){
-        screenInfo.setStoryPrefix("kb");
-        screenInfo.setStoryPageLimit(5);
+    private void setStoryScreen(Intent intent){
+        intent.putExtra(screenInfo.LESSON_PREFIX,"l1");
+        intent.putExtra(screenInfo.LESSON_LIMIT,3);
     }
 
-    private void setLessonScreen(){
-        screenInfo.setLessonNumber("l1");
-        screenInfo.setLessonPageLimit(3);
+    private void setLessonScreen(Intent intent){
+        intent.putExtra(screenInfo.LESSON_PREFIX,"l1");
+        intent.putExtra(screenInfo.LESSON_LIMIT,3);
     }
 
 }
