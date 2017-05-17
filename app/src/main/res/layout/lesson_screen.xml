@@ -35,7 +35,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:text="@string/previous_button"
-        android:onClick="previousLessonPage"/>
+        android:onClick="previousPage"/>
 
         <SeekBar
             android:id="@+id/progress"
@@ -50,7 +50,7 @@
         android:layout_height="50dp"
         android:text="@string/next_button"
         android:layout_marginLeft="252dp"
-        android:onClick="nextLessonPage"/>
+        android:onClick="nextPage"/>
 
     </RelativeLayout>
 

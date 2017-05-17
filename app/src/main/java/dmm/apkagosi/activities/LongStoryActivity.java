@@ -20,12 +20,13 @@ public class LongStoryActivity extends GeneralActivity{
         displayScreen();
     }
 
-    private void displayScreen() {
+    @Override
+    protected void displayScreen() {
         Intent intent = getIntent();
-
         TextView text = (TextView) findViewById(R.id.long_text);
-
         String textId = intent.getStringExtra(screenInfo.LONG_TEXT);
+
+        Log.i("Param","Text prefix = " + textId);
 
         text.setText(displayTextOnTextView("",textId));
     }

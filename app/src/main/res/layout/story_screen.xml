@@ -32,13 +32,13 @@
         android:layout_height="50dp"
         android:id="@+id/next"
         android:layout_marginLeft="200dp"
-        android:onClick="nextStoryPage"/>
+        android:onClick="nextPage"/>
 
     <Button
         android:text="@string/previous_button"
         android:layout_width="198dp"
         android:layout_height="50dp"
         android:id="@+id/previous"
-        android:onClick="previousStoryPage"/>
+        android:onClick="previousPage"/>
     </RelativeLayout>
 </LinearLayout>

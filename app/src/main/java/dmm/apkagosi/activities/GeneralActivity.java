@@ -18,30 +18,18 @@ import dmm.apkagosi.screen.ScreenInfo;
 public class GeneralActivity extends AppCompatActivity{
 
     protected ScreenInfo screenInfo = new ScreenInfo();
-
-//    private Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
-//    private Intent storyActivityIntent = new Intent(this, StoryActivity.class);
-//    private Intent lessonActivityIntent = new Intent(this, LessonActivity.class);
-
+    private int pageCounter = 1;
+    private int currentPage = 1;
 
     public int getPageCounter() {
         return pageCounter;
     }
-
     public void setPageCounter(int pageCounter) {
         this.pageCounter = pageCounter;
     }
-
     public int getCurrentPage() {
         return currentPage;
     }
-
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    private int pageCounter = 1;
-    private int currentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +46,21 @@ public class GeneralActivity extends AppCompatActivity{
         return selectItem(item);
     }
 
+    protected void displayScreen(){};
 
-    protected void setNextPage() {
+
+    protected void nextPage(View view) {
         if (currentPage < pageCounter) {
             currentPage = currentPage + 1;
-        } else if (currentPage == pageCounter) {
-            currentPage = 1;
         }
+        displayScreen();
     }
 
-    protected void setPreviousPage() {
+    protected void previousPage(View view) {
         if (currentPage > 1) {
             currentPage = currentPage - 1;
         }
+        displayScreen();
     }
 
     protected String displayTextOnTextView(String prefix, String textType){

@@ -3,7 +3,6 @@ package dmm.apkagosi.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,19 +20,9 @@ public class LessonActivity extends GeneralActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lesson_screen);
 
-        setMaxProgressBarValue(getPageCounter());
-        displayLessonScreen();
+
+        displayScreen();
         Log.i("Info","LessonActivity created");
-    }
-
-    public void previousLessonPage(View view){
-        setPreviousPage();
-        displayLessonScreen();
-    }
-
-    public void nextLessonPage(View view){
-        setNextPage();
-        displayLessonScreen();
     }
 
     protected void setMaxProgressBarValue(int max){
@@ -42,17 +31,23 @@ public class LessonActivity extends GeneralActivity {
     }
 
 
-    private void displayLessonScreen() {
+    @Override
+    protected void displayScreen() {
         Intent intent = getIntent();
-        setPageCounter(intent.getIntExtra(screenInfo.LESSON_LIMIT, 1));
+        int lessonCounter = intent.getIntExtra(screenInfo.LESSON_LIMIT, 1);
+        String lessonPrefix = intent.getStringExtra(screenInfo.LESSON_PREFIX);
+
+        Log.i("Param","Lesson limit = " + Integer.toString(lessonCounter));
+        Log.i("Param","Lesson prefix = " + lessonPrefix);
+
+        setPageCounter(lessonCounter);
+        setMaxProgressBarValue(getPageCounter());
 
         TextView lessonNumber = (TextView) findViewById(R.id.lesson_number);
         TextView symbolSign = (TextView) findViewById(R.id.symbol);
         TextView symbolReading = (TextView) findViewById(R.id.reading);
         TextView symbolHelp = (TextView) findViewById(R.id.help_text);
         SeekBar lessonProgress = (SeekBar) findViewById(R.id.progress);
-
-        String lessonPrefix = intent.getStringExtra(screenInfo.LESSON_PREFIX);
 
         lessonNumber.setText(displayTextOnTextView(lessonPrefix,"ln"));
         symbolSign.setText(displayTextOnTextView(lessonPrefix,"ss"));

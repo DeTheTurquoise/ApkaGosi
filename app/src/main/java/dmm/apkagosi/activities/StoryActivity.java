@@ -3,7 +3,6 @@ package dmm.apkagosi.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,28 +18,23 @@ public class StoryActivity extends GeneralActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.story_screen);
-        displayStoryScreen();
+        displayScreen();
         Log.i("Info","StoryActivity created");
     }
 
-
-    public void previousStoryPage(View view) {
-        setPreviousPage();
-        displayStoryScreen();
-    }
-
-    public void nextStoryPage(View view) {
-        setNextPage();
-        displayStoryScreen();
-    }
-
-    private void displayStoryScreen() {
+    @Override
+    protected void displayScreen() {
         Intent intent = getIntent();
-        setPageCounter(intent.getIntExtra(screenInfo.STORY_LIMIT,1));
+        int pageCounter = intent.getIntExtra(screenInfo.STORY_LIMIT,1);
+        setPageCounter(pageCounter);
+        String storyPrefix = intent.getStringExtra(screenInfo.STORY_PREFIX);
+
+        Log.i("Param","Lesson limit = " + Integer.toString(pageCounter));
+        Log.i("Param","Lesson prefix = " + storyPrefix);
+
         TextView storyText = (TextView) findViewById(R.id.fluff_text);
         ImageView storyImage = (ImageView) findViewById(R.id.fluff_image);
 
-        String storyPrefix = intent.getStringExtra(screenInfo.STORY_PREFIX);
         storyText.setText(displayTextOnTextView(storyPrefix,"t"));
         storyImage.setImageResource(displayImageOnImageView(storyPrefix, "i"));
 
