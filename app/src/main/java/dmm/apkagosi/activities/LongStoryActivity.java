@@ -27,7 +27,7 @@ public class LongStoryActivity extends GeneralActivity {
     private void prepareScreen(){
         Intent intent = getIntent();
         text = (TextView) findViewById(R.id.long_text);
-        prefix = intent.getStringExtra(screenInfo.LONG_TEXT);
+        prefix = intent.getStringExtra(MainActivity.LONG_TEXT);
         Log.i("Param","Text prefix = " + prefix);
     }
 

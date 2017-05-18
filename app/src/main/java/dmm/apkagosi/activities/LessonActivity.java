@@ -37,8 +37,8 @@ public class LessonActivity extends GeneralActivity {
         symbolHelp = (TextView) findViewById(R.id.help_text);
 
         Intent intent = getIntent();
-        pageCounter = intent.getIntExtra(screenInfo.LESSON_LIMIT, 1);
-        prefix = intent.getStringExtra(screenInfo.LESSON_PREFIX);
+        pageCounter = intent.getIntExtra(MainActivity.LESSON_LIMIT, 1);
+        prefix = intent.getStringExtra(MainActivity.LESSON_PREFIX);
         lessonProgress.setMax(pageCounter - 1);
 
         Log.i("Param","Lesson limit = " + Integer.toString(pageCounter));

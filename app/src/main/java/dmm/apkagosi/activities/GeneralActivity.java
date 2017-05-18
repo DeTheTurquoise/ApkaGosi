@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 import dmm.apkagosi.R;
-import dmm.apkagosi.screen.ScreenInfo;
 import dmm.apkagosi.utils.LogTags;
 
 /**
@@ -19,7 +18,6 @@ import dmm.apkagosi.utils.LogTags;
 public class GeneralActivity extends AppCompatActivity{
 
     protected LogTags logTags;
-    protected ScreenInfo screenInfo = new ScreenInfo();
     protected int pageCounter = 1;
     protected int currentPage = 1;
     protected String prefix = "";
@@ -92,21 +90,21 @@ public class GeneralActivity extends AppCompatActivity{
             return true;
         case R.id.menu_item_lesson:
             Intent lessonActivityIntent = new Intent(this, LessonActivity.class);
-            lessonActivityIntent.putExtra(screenInfo.LESSON_PREFIX,"l1");
-            lessonActivityIntent.putExtra(screenInfo.LESSON_LIMIT,3);
+            lessonActivityIntent.putExtra(MainActivity.LESSON_PREFIX,"l1");
+            lessonActivityIntent.putExtra(MainActivity.LESSON_LIMIT,3);
             Log.i(logTags.MENU,lessonActivityIntent.getComponent().toString() + " selected");
             startActivity(lessonActivityIntent);
             return true;
         case R.id.menu_item_story:
             Intent storyActivityIntent = new Intent(this, StoryActivity.class);
-            storyActivityIntent.putExtra(screenInfo.STORY_PREFIX,"kp");
-            storyActivityIntent.putExtra(screenInfo.STORY_LIMIT,5);
+            storyActivityIntent.putExtra(MainActivity.STORY_PREFIX,"kp");
+            storyActivityIntent.putExtra(MainActivity.STORY_LIMIT,5);
             Log.i(logTags.MENU,storyActivityIntent.getComponent().toString() + " selected");
             startActivity(storyActivityIntent);
             return true;
         case R.id.menu_item_text:
             Intent textActivityIntent = new Intent(this, LongStoryActivity.class);
-            textActivityIntent.putExtra(screenInfo.LONG_TEXT, "ct");
+            textActivityIntent.putExtra(MainActivity.LONG_TEXT, "ct");
             Log.i(logTags.MENU,textActivityIntent.getComponent().toString() + " selected");
             startActivity(textActivityIntent);
             return true;

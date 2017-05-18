@@ -32,8 +32,8 @@ public class StoryActivity extends GeneralActivity {
      */
     private void prepareScreen(){
         Intent intent = getIntent();
-        pageCounter = intent.getIntExtra(screenInfo.STORY_LIMIT,1);
-        prefix = intent.getStringExtra(screenInfo.STORY_PREFIX);
+        pageCounter = intent.getIntExtra(MainActivity.STORY_LIMIT,1);
+        prefix = intent.getStringExtra(MainActivity.STORY_PREFIX);
 
         storyText = (TextView) findViewById(R.id.fluff_text);
         storyImage = (ImageView) findViewById(R.id.fluff_image);
