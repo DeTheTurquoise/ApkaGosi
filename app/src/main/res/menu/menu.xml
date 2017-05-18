@@ -14,7 +14,11 @@
         app:showAsAction="never"
         android:title="@string/menu_main" />
     <item android:id="@+id/menu_item_text"
-        android:orderInCategory="3"
+    android:orderInCategory="4"
+    app:showAsAction="never"
+    android:title="@string/menu_text" />
+    <item android:id="@+id/menu_item_translate"
+        android:orderInCategory="5"
         app:showAsAction="never"
-        android:title="@string/menu_text" />
+        android:title="@string/menu_translate" />
 </menu>

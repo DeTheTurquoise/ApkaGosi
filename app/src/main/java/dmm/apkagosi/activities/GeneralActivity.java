@@ -3,6 +3,7 @@ package dmm.apkagosi.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 
 import dmm.apkagosi.R;
 import dmm.apkagosi.screen.ScreenInfo;
+import dmm.apkagosi.utils.LogTags;
 
 /**
  * Created by ddabrowa on 2017-04-10.
@@ -17,6 +19,7 @@ import dmm.apkagosi.screen.ScreenInfo;
 
 public class GeneralActivity extends AppCompatActivity{
 
+    protected LogTags logTags;
     protected ScreenInfo screenInfo = new ScreenInfo();
     private int pageCounter = 1;
     private int currentPage = 1;
@@ -46,7 +49,11 @@ public class GeneralActivity extends AppCompatActivity{
         return selectItem(item);
     }
 
-    protected void displayScreen(){};
+
+    /**
+     * displayScreen() sets specific parameters for current instance of activity
+     */
+    protected void displayScreen(){}
 
 
     protected void nextPage(View view) {
@@ -96,24 +103,33 @@ public class GeneralActivity extends AppCompatActivity{
     switch (item.getItemId()) {
         case R.id.menu_item_main:
             Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
+            Log.i(logTags.MENU,profileActivityIntent.getComponent().toString() + " selected");
             startActivity(profileActivityIntent);
             return true;
         case R.id.menu_item_lesson:
             Intent lessonActivityIntent = new Intent(this, LessonActivity.class);
             lessonActivityIntent.putExtra(screenInfo.LESSON_PREFIX,"l1");
             lessonActivityIntent.putExtra(screenInfo.LESSON_LIMIT,3);
+            Log.i(logTags.MENU,lessonActivityIntent.getComponent().toString() + " selected");
             startActivity(lessonActivityIntent);
             return true;
         case R.id.menu_item_story:
             Intent storyActivityIntent = new Intent(this, StoryActivity.class);
             storyActivityIntent.putExtra(screenInfo.STORY_PREFIX,"kp");
             storyActivityIntent.putExtra(screenInfo.STORY_LIMIT,5);
+            Log.i(logTags.MENU,storyActivityIntent.getComponent().toString() + " selected");
             startActivity(storyActivityIntent);
             return true;
         case R.id.menu_item_text:
             Intent textActivityIntent = new Intent(this, LongStoryActivity.class);
             textActivityIntent.putExtra(screenInfo.LONG_TEXT, "ct");
+            Log.i(logTags.MENU,textActivityIntent.getComponent().toString() + " selected");
             startActivity(textActivityIntent);
+            return true;
+        case R.id.menu_item_translate:
+            Intent translateActivityIntent = new Intent(this, TranslateActivity.class);
+            Log.i(logTags.MENU,translateActivityIntent.getComponent().toString() + " selected");
+            startActivity(translateActivityIntent);
             return true;
         default:
             return super.onOptionsItemSelected(item);
