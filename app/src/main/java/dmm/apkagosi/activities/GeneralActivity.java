@@ -1,7 +1,6 @@
 package dmm.apkagosi.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -21,23 +20,9 @@ public class GeneralActivity extends AppCompatActivity{
 
     protected LogTags logTags;
     protected ScreenInfo screenInfo = new ScreenInfo();
-    private int pageCounter = 1;
-    private int currentPage = 1;
-
-    public int getPageCounter() {
-        return pageCounter;
-    }
-    public void setPageCounter(int pageCounter) {
-        this.pageCounter = pageCounter;
-    }
-    public int getCurrentPage() {
-        return currentPage;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    protected int pageCounter = 1;
+    protected int currentPage = 1;
+    protected String prefix = "";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,7 +39,6 @@ public class GeneralActivity extends AppCompatActivity{
      * displayScreen() sets specific parameters for current instance of activity
      */
     protected void displayScreen(){}
-
 
     protected void nextPage(View view) {
         if (currentPage < pageCounter) {

@@ -16,8 +16,6 @@ public class StoryActivity extends GeneralActivity {
 
     private TextView storyText;
     private ImageView storyImage;
-    private int pageCounter;
-    private String storyPrefix;
 
 
     @Override
@@ -35,20 +33,19 @@ public class StoryActivity extends GeneralActivity {
     private void prepareScreen(){
         Intent intent = getIntent();
         pageCounter = intent.getIntExtra(screenInfo.STORY_LIMIT,1);
-        setPageCounter(pageCounter);
-        storyPrefix = intent.getStringExtra(screenInfo.STORY_PREFIX);
+        prefix = intent.getStringExtra(screenInfo.STORY_PREFIX);
 
         storyText = (TextView) findViewById(R.id.fluff_text);
         storyImage = (ImageView) findViewById(R.id.fluff_image);
 
-        Log.i(logTags.PARAMETERS,"Lesson limit = " + Integer.toString(pageCounter));
-        Log.i(logTags.PARAMETERS,"Lesson prefix = " + storyPrefix);
+        Log.i(logTags.PARAMETERS,"Story pages = " + Integer.toString(pageCounter));
+        Log.i(logTags.PARAMETERS,"Story prefix = " + prefix);
     }
 
     @Override
     protected void displayScreen() {
-        storyText.setText(displayTextOnTextView(storyPrefix,"t"));
-        storyImage.setImageResource(displayImageOnImageView(storyPrefix, "i"));
+        storyText.setText(displayTextOnTextView(prefix,"t"));
+        storyImage.setImageResource(displayImageOnImageView(prefix, "i"));
         setPreviousAndNextButton();
     }
 }

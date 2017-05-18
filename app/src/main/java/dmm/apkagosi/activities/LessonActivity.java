@@ -19,9 +19,6 @@ public class LessonActivity extends GeneralActivity {
     private TextView symbolSign;
     private TextView symbolReading;
     private TextView symbolHelp;
-    private String lessonPrefix;
-    int lessonCounter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +37,22 @@ public class LessonActivity extends GeneralActivity {
         symbolHelp = (TextView) findViewById(R.id.help_text);
 
         Intent intent = getIntent();
-        lessonCounter = intent.getIntExtra(screenInfo.LESSON_LIMIT, 1);
-        lessonPrefix = intent.getStringExtra(screenInfo.LESSON_PREFIX);
-        setPageCounter(lessonCounter);
-        lessonProgress.setMax(lessonCounter - 1);
+        pageCounter = intent.getIntExtra(screenInfo.LESSON_LIMIT, 1);
+        prefix = intent.getStringExtra(screenInfo.LESSON_PREFIX);
+        lessonProgress.setMax(pageCounter - 1);
 
-        Log.i("Param","Lesson limit = " + Integer.toString(lessonCounter));
-        Log.i("Param","Lesson prefix = " + lessonPrefix);
+        Log.i("Param","Lesson limit = " + Integer.toString(pageCounter));
+        Log.i("Param","Lesson prefix = " + prefix);
     }
 
 
     @Override
     protected void displayScreen() {
-        lessonNumber.setText(displayTextOnTextView(lessonPrefix,"ln"));
-        symbolSign.setText(displayTextOnTextView(lessonPrefix,"ss"));
-        symbolReading.setText(displayTextOnTextView(lessonPrefix,"sr"));
-        symbolHelp.setText(displayTextOnTextView(lessonPrefix, "sh"));
-        lessonProgress.setProgress(getCurrentPage()- 1);
+        lessonNumber.setText(displayTextOnTextView(prefix,"ln"));
+        symbolSign.setText(displayTextOnTextView(prefix,"ss"));
+        symbolReading.setText(displayTextOnTextView(prefix,"sr"));
+        symbolHelp.setText(displayTextOnTextView(prefix, "sh"));
+        lessonProgress.setProgress(currentPage- 1);
         setPreviousAndNextButton();
     }
 }

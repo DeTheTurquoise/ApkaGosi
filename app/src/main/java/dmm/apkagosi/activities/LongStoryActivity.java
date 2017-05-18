@@ -12,22 +12,27 @@ import dmm.apkagosi.R;
  */
 
 public class LongStoryActivity extends GeneralActivity {
+
+    private TextView text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scroll_screen);
         Log.i("Info","LongStoryActivity created");
+        prepareScreen();
         displayScreen();
+    }
+
+    private void prepareScreen(){
+        Intent intent = getIntent();
+        text = (TextView) findViewById(R.id.long_text);
+        prefix = intent.getStringExtra(screenInfo.LONG_TEXT);
+        Log.i("Param","Text prefix = " + prefix);
     }
 
     @Override
     protected void displayScreen() {
-        Intent intent = getIntent();
-        TextView text = (TextView) findViewById(R.id.long_text);
-        String textId = intent.getStringExtra(screenInfo.LONG_TEXT);
-
-        Log.i("Param","Text prefix = " + textId);
-
-        text.setText(displayTextOnTextView("",textId));
+        text.setText(displayTextOnTextView("",prefix));
     }
 }
