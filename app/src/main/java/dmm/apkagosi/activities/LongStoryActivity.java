@@ -11,7 +11,7 @@ import dmm.apkagosi.R;
  * Created by ddabrowa on 2017-05-16.
  */
 
-public class LongStoryActivity extends GeneralActivity{
+public class LongStoryActivity extends GeneralActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

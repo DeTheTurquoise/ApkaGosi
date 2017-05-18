@@ -15,8 +15,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-
-    final static String JISHO_BASE_URL = "https://http://jisho.org/search/";
+    final static String JISHO_BASE_URL = "http://jisho.org/search/";
 
     /**
      * Builds the URL used to search in jisho translator
@@ -25,7 +24,8 @@ public class NetworkUtils {
      * @return The URL to use to query the jisho
      */
     public static URL buildUrl(String textToTranslate) {
-        Uri builtUri = Uri.parse(JISHO_BASE_URL).buildUpon().appendQueryParameter("", textToTranslate).build();
+        String baseUrl = JISHO_BASE_URL + textToTranslate;
+        Uri builtUri = Uri.parse(baseUrl);
 
         URL url = null;
         try {
@@ -33,7 +33,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
         return url;
     }
 

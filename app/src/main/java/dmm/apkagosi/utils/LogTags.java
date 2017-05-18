@@ -7,5 +7,5 @@ package dmm.apkagosi.utils;
 public class LogTags {
     public final static String MENU = "Menu";
     public final static String PARAMETERS = "Param";
-
+    public final static String RESULT = "Result";
 }
