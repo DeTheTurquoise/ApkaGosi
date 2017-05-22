@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    final static String JISHO_BASE_URL = "http://jisho.org/search/";
+    final static String JISHO_BASE_URL = "http://jisho.org/api/v1/search/words?keyword=";
 
     /**
      * Builds the URL used to search in jisho translator

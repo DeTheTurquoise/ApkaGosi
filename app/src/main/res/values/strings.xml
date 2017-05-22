@@ -4,6 +4,7 @@
     <string name="next_button">Dalej</string>
     <string name="previous_button">Cofnij</string>
     <string name="search">Wyszukaj</string>
+    <string name="connection_error_message">Nie można nawiązać połączenia ze stroną</string>
 
     <string name="menu_story">Historia</string>
     <string name="menu_lesson">Lekcja</string>
