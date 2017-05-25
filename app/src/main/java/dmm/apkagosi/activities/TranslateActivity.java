@@ -27,6 +27,7 @@ public class TranslateActivity extends GeneralActivity {
     private TextView errorMessage;
     private ProgressBar waitingForConnection;
     private String japaneseWord;
+    private String englishDefinition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +91,18 @@ public class TranslateActivity extends GeneralActivity {
         }
 
         @Override
-        protected void onPostExecute(String searchResults) {
+        protected void onPostExecute(String searchResults){
             waitingForConnection.setVisibility(View.INVISIBLE);
             if (searchResults != null && !searchResults.equals("")) {
                 displaySearchResult();
                 try {
-                    japaneseWord = JSONParser.getWord(searchResults);
+
+                    japaneseWord = JSONParser.getFirstTranslation(searchResults);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                translatedText.setText(searchResults);
-                Log.i("temp", japaneseWord);
+                translatedText.setText(japaneseWord+englishDefinition);
+//                Log.i(LogTags.TEMPORARY_LOG, japaneseWord);
             }
             else {
                 displayErrorMessage();

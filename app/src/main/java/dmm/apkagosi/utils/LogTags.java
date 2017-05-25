@@ -5,7 +5,8 @@ package dmm.apkagosi.utils;
  */
 
 public class LogTags {
-    public final static String MENU = "Menu";
-    public final static String PARAMETERS = "Param";
-    public final static String RESULT = "Result";
+    public final static String MENU = "DMM_Menu";
+    public final static String PARAMETERS = "DMM_Param";
+    public final static String RESULT = "DMM_Result";
+    public final static String TEMPORARY_LOG = "DMM_temp";
 }
