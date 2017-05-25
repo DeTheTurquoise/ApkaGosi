@@ -37,7 +37,7 @@ public class JSONParser {
         JSONArray sensesArray = arrayObject.getJSONArray("senses");
         JSONObject definitionObject = sensesArray.getJSONObject(englishDefinitionOrder);
         JSONArray englishDefinition = definitionObject.getJSONArray("english_definitions");
-        String definitions = "\n";
+        String definitions = new String("");
         for (int i=0; i<englishDefinition.length(); i++){
             definitions = definitions + englishDefinition.getString(i) + "\n";
         }
@@ -45,7 +45,9 @@ public class JSONParser {
     }
 
     public static String getFirstTranslation(String JSONResult) throws JSONException {
-        return "Word\n" + getWord(JSONResult,0,0) + "\n\nReading\n" + getReading(JSONResult,0,0) + "\n\nEnglishDefinition\n" + getDefinition(JSONResult,0,0);
+        String result = new String("");
+        result = "Word\n" + getWord(JSONResult,0,0) + "\n\nReading\n" + getReading(JSONResult,0,0) + "\n\nEnglishDefinition\n" + getDefinition(JSONResult,0,0);
+        return result;
     }
 
 

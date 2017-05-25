@@ -26,8 +26,7 @@ public class TranslateActivity extends GeneralActivity {
     private TextView translatedText;
     private TextView errorMessage;
     private ProgressBar waitingForConnection;
-    private String japaneseWord;
-    private String englishDefinition;
+    private String japaneseWord = new String("");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +100,7 @@ public class TranslateActivity extends GeneralActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                translatedText.setText(japaneseWord+englishDefinition);
-//                Log.i(LogTags.TEMPORARY_LOG, japaneseWord);
+                translatedText.setText(japaneseWord);
             }
             else {
                 displayErrorMessage();
