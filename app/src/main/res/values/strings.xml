@@ -5,6 +5,7 @@
     <string name="previous_button">Cofnij</string>
     <string name="search">Wyszukaj</string>
     <string name="connection_error_message">Nie można nawiązać połączenia ze stroną</string>
+    <string name="connection_waiting_message">Trwa połączenie z internetem</string>
 
     <string name="menu_story">Historia</string>
     <string name="menu_lesson">Lekcja</string>
@@ -37,6 +38,7 @@
 
     <string name="ct1">Każdy kierownik projektu wie, że aby dobrze rozpocząć projekt – trzeba dobrze go opisać i potwierdzić ze sponsorem kierunek i sposób działań. Kierownik Projektu to zwykle koordynator w danym przedsięwzięciu, który organizuje prace projektowe. Czasami prace wykonuje samodzielnie, ale najczęściej z zespołem. W zależności od specyfiki i poziomu skomplikowania zadania – tworzy także różnego rodzaju dokumentacje projektowe opisujące działania i pomagające monitorować prace w trakcie realizacji. \n\nWyobraź sobie, że jesteś kierownikiem projektu. Sponsor Projektu (osoba, której zależy na osiągnięciu celów projektu i najczęściej mająca budżet na jego realizację) powołuje Cię do tej roli i mówi w kilku zdaniach na wysokim poziomie abstrakcji co i na kiedy masz zrobić, aby był szczęśliwy. Czyli co masz zrobić, aby jego przełożony był szczęśliwy – jak nieraz się śmiejemy z kolegami. Zwykle język, w którym komunikuje się z nami sponsor jest zrozumiały najlepiej dla niego samego. Jeśli zbytnio zaufasz swojej umiejętności czytania innym w myślach – możesz w tej chwili wpaść jak śliwka w kompot. Ostrzegam Cię – czytanie w myślach sponsora nigdy się nie opłaca. Wszyscy mamy inne obrazy świata w głowie, porozumiewamy się na różnych poziomach zrozumienia zjawisk. Potwierdź więc minimum dwa razy czy dobrze się rozumiecie, a następnie zapisz to i poproś sponsora o podpis pod tą deklaracją.</string>
 
-    <string name="trans_hint">wWpisz szukane słowo (EN)</string>
+    <string name="trans_hint">Wpisz szukane słowo (EN)</string>
+    <string name="trans_no_replay">Nie znaleziono tłumaczenia</string>
 
 </resources>

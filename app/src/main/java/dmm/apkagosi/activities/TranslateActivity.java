@@ -1,5 +1,6 @@
 package dmm.apkagosi.activities;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -75,6 +77,8 @@ public class TranslateActivity extends GeneralActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             waitingForConnection.setVisibility(View.VISIBLE);
+            Context context = TranslateActivity.this;
+            Toast.makeText(context, R.string.connection_waiting_message, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -95,10 +99,10 @@ public class TranslateActivity extends GeneralActivity {
             if (searchResults != null && !searchResults.equals("")) {
                 displaySearchResult();
                 try {
-
                     japaneseWord = JSONParser.getFirstTranslation(searchResults);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    japaneseWord = getString(R.string.trans_no_replay);
                 }
                 translatedText.setText(japaneseWord);
             }

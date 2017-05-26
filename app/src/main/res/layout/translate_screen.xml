@@ -8,8 +8,8 @@
         android:id="@+id/translate_text_to_translate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/menu_translate"
-        android:textSize="22sp" />
+        android:hint="@string/trans_hint"
+        android:textSize="22sp"/>
 
     <Button
         android:layout_width="match_parent"
