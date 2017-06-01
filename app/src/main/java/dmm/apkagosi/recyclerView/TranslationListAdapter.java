@@ -17,11 +17,16 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
 
     private int numberOfResultsToDisplay;
 
-    public void setJishoWord(String jishoWord) {
+    public void setJishoWord(String[] jishoWord, String[] jishoReading, String[]jishoDefinition, int numberOfResultsToDisplay) {
         this.jishoWord = jishoWord;
+        this.jishoReading = jishoReading;
+        this.jishoDefinition = jishoDefinition;
+        this.numberOfResultsToDisplay = numberOfResultsToDisplay;
     }
 
-    private String jishoWord;
+    private String[] jishoWord;
+    private String[] jishoReading;
+    private String[] jishoDefinition;
 
 
     /**
@@ -47,7 +52,6 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
         NumberViewHolder viewHolder = new NumberViewHolder(view);
 
-        viewHolder.translationText.setText(jishoWord);
 
         return viewHolder;
     }
@@ -73,19 +77,24 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
     public class NumberViewHolder extends RecyclerView.ViewHolder{
         public NumberViewHolder(View itemView) {
             super(itemView);
-            itemNumber = (TextView) itemView.findViewById(R.id.translate_result_number);
+            translationReading = (TextView) itemView.findViewById(R.id.translate_text_reading);
             translationText = (TextView) itemView.findViewById(R.id.translate_text_translated);
+            translationDefinition = (TextView) itemView.findViewById(R.id.translate_description);
         }
 
-        private TextView itemNumber;
+        private TextView translationReading;
         private TextView translationText;
+        private TextView translationDefinition;
+
 
         /**
          * Displays number of translation result in order
          * @param itemIndex - translation result number
          */
         void bind(int itemIndex){
-            itemNumber.setText(String.valueOf(itemIndex));
+            translationReading.setText(jishoReading[itemIndex]);
+            translationText.setText(jishoWord[itemIndex]);
+            translationDefinition.setText(jishoDefinition[itemIndex]);
         }
     }
 }

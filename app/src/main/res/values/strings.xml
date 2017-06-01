@@ -40,5 +40,8 @@
 
     <string name="trans_hint">Wpisz szukane słowo (EN)</string>
     <string name="trans_no_replay">Nie znaleziono tłumaczenia</string>
+    <string name="trans_word">Tłumaczenie</string>
+    <string name="trans_reading">Czytanie</string>
+    <string name="trans_no_connection">Nie można nawiązać połączenia</string>
 
 </resources>

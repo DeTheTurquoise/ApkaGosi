@@ -30,8 +30,10 @@ public class TranslateActivity extends GeneralActivity {
     private EditText textToTranslate;
     private TextView errorMessage;
     private ProgressBar waitingForConnection;
-    private String japaneseWord = new String("");
-    private static final int TRANSLATION_LIST = 10;
+    private String japaneseWord[];
+    private String japaneseReading[];
+    private String japaneseDescription[];
+    private int numberOfResultsToDisplay = 10;
     private TranslationListAdapter translationListAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -49,10 +51,9 @@ public class TranslateActivity extends GeneralActivity {
         errorMessage = (TextView) findViewById(R.id.translate_error_message);
         waitingForConnection = (ProgressBar) findViewById(R.id.translate_wait_for_page_loading);
         recyclerView = (RecyclerView) findViewById(R.id.translation_list);
-
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        translationListAdapter = new TranslationListAdapter(TRANSLATION_LIST);
+        translationListAdapter = new TranslationListAdapter(numberOfResultsToDisplay);
     }
 
     /**
@@ -108,18 +109,25 @@ public class TranslateActivity extends GeneralActivity {
             waitingForConnection.setVisibility(View.INVISIBLE);
             if (searchResults != null && !searchResults.equals("")) {
                 displaySearchResult();
+                int numberOfResults = 0;
                 try {
-                    japaneseWord = JSONParser.getFirstTranslation(searchResults);
+                    numberOfResults = JSONParser.getTranslationResultsNumber(searchResults);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    japaneseWord = getString(R.string.trans_no_replay);
                 }
-                //translatedText.setText(japaneseWord);
-
-                translationListAdapter.setJishoWord(japaneseWord);
+                if( numberOfResults < numberOfResultsToDisplay){
+                        numberOfResultsToDisplay = numberOfResults;
+                    }
+                japaneseWord = JSONParser.getWords(searchResults, numberOfResultsToDisplay);
+                japaneseReading = JSONParser.getReadings(searchResults,numberOfResultsToDisplay);
+                japaneseDescription = JSONParser.getDefinitions(searchResults,numberOfResultsToDisplay);
+                recyclerView.clearOnScrollListeners();
+                translationListAdapter.setJishoWord(japaneseWord, japaneseReading, japaneseDescription, numberOfResultsToDisplay);
+                recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(translationListAdapter);
             }
             else {
+                errorMessage.setText(R.string.trans_no_connection);
                 displayErrorMessage();
             }
         }
