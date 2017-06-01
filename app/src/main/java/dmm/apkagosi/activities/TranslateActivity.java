@@ -3,6 +3,8 @@ package dmm.apkagosi.activities;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import java.net.URL;
 import dmm.apkagosi.R;
 import dmm.apkagosi.network.JSONParser;
 import dmm.apkagosi.network.NetworkUtils;
+import dmm.apkagosi.recyclerView.TranslationListAdapter;
 
 /**
  * Created by ddabrowa on 2017-05-17.
@@ -25,10 +28,13 @@ import dmm.apkagosi.network.NetworkUtils;
 
 public class TranslateActivity extends GeneralActivity {
     private EditText textToTranslate;
-    private TextView translatedText;
     private TextView errorMessage;
     private ProgressBar waitingForConnection;
     private String japaneseWord = new String("");
+    private static final int TRANSLATION_LIST = 10;
+    private TranslationListAdapter translationListAdapter;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +46,13 @@ public class TranslateActivity extends GeneralActivity {
 
     private void prepareScreen(){
         textToTranslate = (EditText) findViewById(R.id.translate_text_to_translate);
-        translatedText = (TextView) findViewById(R.id.translate_text_translated);
         errorMessage = (TextView) findViewById(R.id.translate_error_message);
         waitingForConnection = (ProgressBar) findViewById(R.id.translate_wait_for_page_loading);
+        recyclerView = (RecyclerView) findViewById(R.id.translation_list);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        translationListAdapter = new TranslationListAdapter(TRANSLATION_LIST);
     }
 
     /**
@@ -62,13 +72,13 @@ public class TranslateActivity extends GeneralActivity {
      */
     private void displaySearchResult(){
         errorMessage.setVisibility(View.INVISIBLE);
-        translatedText.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
     /**
      * Method used to display error - error and result messages are displayed alternatively
      */
     private void displayErrorMessage(){
-        translatedText.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
         errorMessage.setVisibility(View.VISIBLE);
     }
 
@@ -104,7 +114,10 @@ public class TranslateActivity extends GeneralActivity {
                     e.printStackTrace();
                     japaneseWord = getString(R.string.trans_no_replay);
                 }
-                translatedText.setText(japaneseWord);
+                //translatedText.setText(japaneseWord);
+
+                translationListAdapter.setJishoWord(japaneseWord);
+                recyclerView.setAdapter(translationListAdapter);
             }
             else {
                 displayErrorMessage();
