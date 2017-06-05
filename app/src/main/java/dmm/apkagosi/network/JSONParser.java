@@ -14,10 +14,10 @@ public class JSONParser {
         return searchResult.getJSONArray(arrayField);
     }
 
-    private static JSONObject finalTranslatedWordObject(String JSONResult, int translatedWordOrder, int translatingWordOrder) throws JSONException {
-        JSONArray resultArray = getArray(JSONResult, "data");
+    private static JSONObject finalTranslatedWordObject(String JSONResult, int translatedWordOrder, int translatingWordOrder, String generalArray, String internalArray) throws JSONException {
+        JSONArray resultArray = getArray(JSONResult, generalArray);
         JSONObject arrayObject = resultArray.getJSONObject(translatedWordOrder);
-        JSONArray japanese = arrayObject.getJSONArray("japanese");
+        JSONArray japanese = arrayObject.getJSONArray(internalArray);
         return japanese.getJSONObject(translatingWordOrder);
     }
 
@@ -25,7 +25,7 @@ public class JSONParser {
         JSONObject translation = null;
         String word;
         try {
-            translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder);
+            translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder, "data", "japanese");
             word = translation.getString("word");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -38,7 +38,7 @@ public class JSONParser {
         JSONObject translation = null;
         String reading;
         try {
-            translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder);
+            translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder,"data","japanese");
             reading = translation.getString("reading");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -48,13 +48,9 @@ public class JSONParser {
     }
 
     public static String getDefinition(String JSONResult, int translatedWordOrder, int englishDefinitionOrder){
-        JSONArray resultArray = null;
         String definitions = new String("");
         try {
-            resultArray = getArray(JSONResult, "data");
-            JSONObject arrayObject = resultArray.getJSONObject(translatedWordOrder);
-            JSONArray sensesArray = arrayObject.getJSONArray("senses");
-            JSONObject definitionObject = sensesArray.getJSONObject(englishDefinitionOrder);
+            JSONObject definitionObject = finalTranslatedWordObject(JSONResult,translatedWordOrder,englishDefinitionOrder,"data","senses");
             JSONArray englishDefinition = definitionObject.getJSONArray("english_definitions");
             for (int i=0; i<englishDefinition.length(); i++){
                 definitions = definitions + englishDefinition.getString(i) + "\n";
@@ -63,6 +59,20 @@ public class JSONParser {
             e.printStackTrace();
         }
         return definitions;
+    }
+
+    public static String getTag(String JSONResult, int translatedWordOrder, int englishDefinitionOrder){
+        String tags = new String("");
+        try {
+            JSONObject tagObject = finalTranslatedWordObject(JSONResult,translatedWordOrder,englishDefinitionOrder,"data","senses");
+            JSONArray englishTag = tagObject.getJSONArray("tags");
+            for (int i=0; i<englishTag.length(); i++){
+                tags = tags + englishTag.getString(i) + "\n";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return tags;
     }
 
     public static String getFirstTranslation(String JSONResult) throws JSONException {
@@ -89,10 +99,19 @@ public class JSONParser {
         }
         return words;
     }
+
     public static String[] getDefinitions(String JSONResult, int arrayLength){
         String[] words = new String[arrayLength];
         for (int i = 0; i < arrayLength; i++){
             words[i] = getDefinition(JSONResult,i,0);
+        }
+        return words;
+    }
+
+    public static String[] getTags(String JSONResult, int arrayLength){
+        String[] words = new String[arrayLength];
+        for (int i = 0; i < arrayLength; i++){
+            words[i] = getTag(JSONResult,i,0);
         }
         return words;
     }

@@ -9,14 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/trans_hint"
-        android:textSize="22sp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/translate_search_button"
-        android:onClick="search"
-        android:text="@string/search"/>
+        android:textSize="22sp">
+        <requestFocus/>
+    </EditText>
 
     <FrameLayout
         android:layout_width="match_parent"

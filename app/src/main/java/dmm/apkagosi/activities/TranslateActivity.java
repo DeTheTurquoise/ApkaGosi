@@ -1,10 +1,11 @@
 package dmm.apkagosi.activities;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,23 +27,40 @@ import dmm.apkagosi.recyclerView.TranslationListAdapter;
  * Created by ddabrowa on 2017-05-17.
  */
 
-public class TranslateActivity extends GeneralActivity {
+public class TranslateActivity extends GeneralActivity implements TranslationListAdapter.ListItemClickListener{
     private EditText textToTranslate;
     private TextView errorMessage;
     private ProgressBar waitingForConnection;
     private String japaneseWord[];
     private String japaneseReading[];
     private String japaneseDescription[];
-    private int numberOfResultsToDisplay = 10;
+    private String japaneseTags[];
+    private static final int NUMBER_OF_RESULT_TO_DISPLAY = 10;
+    private int numberOfResultsToDisplay;
     private TranslationListAdapter translationListAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+    private Toast tagsFromJisho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.translate_screen);
         prepareScreen();
+        textToTranslate.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                search();
+            }
+        });
         Log.i("Info","TranslateActivity created");
     }
 
@@ -53,18 +71,17 @@ public class TranslateActivity extends GeneralActivity {
         recyclerView = (RecyclerView) findViewById(R.id.translation_list);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        translationListAdapter = new TranslationListAdapter(numberOfResultsToDisplay);
+        translationListAdapter = new TranslationListAdapter(numberOfResultsToDisplay, this);
     }
 
     /**
-     * Method used by button to connect to the jisho
-     * @param view - to use button method needs a parameter view, but it isn't used for search
+     * Method used to connect to the jisho
+     * App performes it when user enters text
      */
-    public void search(View view){
+    public void search(){
         String searchQuery = textToTranslate.getText().toString();
         URL jishoUrl = NetworkUtils.buildUrl(searchQuery);
-        Log.i(logTags.RESULT,"URL = " + jishoUrl.toString());
-
+        Log.i(logTags.RESULT, "URL = " + jishoUrl.toString());
         new JishoSearch().execute(jishoUrl);
     }
 
@@ -83,13 +100,23 @@ public class TranslateActivity extends GeneralActivity {
         errorMessage.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        if (tagsFromJisho != null) {
+            tagsFromJisho.cancel();
+        }
+        String messageTag = japaneseTags[clickedItemIndex];
+        if (messageTag != ""){
+            tagsFromJisho = Toast.makeText(this, messageTag, Toast.LENGTH_LONG);
+            tagsFromJisho.show();
+        }
+    }
+
     public class JishoSearch extends AsyncTask<URL, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             waitingForConnection.setVisibility(View.VISIBLE);
-            Context context = TranslateActivity.this;
-            Toast.makeText(context, R.string.connection_waiting_message, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -115,16 +142,21 @@ public class TranslateActivity extends GeneralActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if( numberOfResults < numberOfResultsToDisplay){
-                        numberOfResultsToDisplay = numberOfResults;
-                    }
+                if( numberOfResults < NUMBER_OF_RESULT_TO_DISPLAY) {
+                    numberOfResultsToDisplay = numberOfResults;
+                }
+                else {
+                    numberOfResultsToDisplay = NUMBER_OF_RESULT_TO_DISPLAY;
+                }
                 japaneseWord = JSONParser.getWords(searchResults, numberOfResultsToDisplay);
                 japaneseReading = JSONParser.getReadings(searchResults,numberOfResultsToDisplay);
                 japaneseDescription = JSONParser.getDefinitions(searchResults,numberOfResultsToDisplay);
+                japaneseTags = JSONParser.getTags(searchResults,numberOfResultsToDisplay);
                 recyclerView.clearOnScrollListeners();
                 translationListAdapter.setJishoWord(japaneseWord, japaneseReading, japaneseDescription, numberOfResultsToDisplay);
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(translationListAdapter);
+
             }
             else {
                 errorMessage.setText(R.string.trans_no_connection);

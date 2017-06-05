@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 
 import dmm.apkagosi.R;
 
@@ -16,6 +17,7 @@ import dmm.apkagosi.R;
 public class TranslationListAdapter extends RecyclerView.Adapter<TranslationListAdapter.NumberViewHolder>{
 
     private int numberOfResultsToDisplay;
+    final private ListItemClickListener clickListener;
 
     public void setJishoWord(String[] jishoWord, String[] jishoReading, String[]jishoDefinition, int numberOfResultsToDisplay) {
         this.jishoWord = jishoWord;
@@ -27,13 +29,22 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
     private String[] jishoWord;
     private String[] jishoReading;
     private String[] jishoDefinition;
+    private String[] jishoTags;
 
 
     /**
      * @param numberOfResultsToDisplay - describes how many of searched result will be displayed
      */
-    public TranslationListAdapter(int numberOfResultsToDisplay) {
+    public TranslationListAdapter(int numberOfResultsToDisplay, ListItemClickListener clickListener) {
         this.numberOfResultsToDisplay = numberOfResultsToDisplay;
+        this.clickListener = clickListener;
+    }
+
+    /**
+     * The interface that receives onClick messages, when recyclerView item is clicked
+     */
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
     }
 
     /**
@@ -74,12 +85,13 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
         return numberOfResultsToDisplay;
     }
 
-    public class NumberViewHolder extends RecyclerView.ViewHolder{
+    public class NumberViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         public NumberViewHolder(View itemView) {
             super(itemView);
             translationReading = (TextView) itemView.findViewById(R.id.translate_text_reading);
             translationText = (TextView) itemView.findViewById(R.id.translate_text_translated);
             translationDefinition = (TextView) itemView.findViewById(R.id.translate_description);
+            itemView.setOnClickListener(this);
         }
 
         private TextView translationReading;
@@ -95,6 +107,11 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
             translationReading.setText(jishoReading[itemIndex]);
             translationText.setText(jishoWord[itemIndex]);
             translationDefinition.setText(jishoDefinition[itemIndex]);
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onListItemClick(getAdapterPosition());
         }
     }
 }
