@@ -9,6 +9,14 @@ import org.json.JSONObject;
  */
 
 public class JSONParser {
+    private static int localArrayLength;
+    private static String resultString;
+
+    private static void resetInitialValues(){
+        localArrayLength = 0;
+        resultString = "";
+    }
+
     private static JSONArray getArray(String JSONResult, String arrayField) throws JSONException {
         JSONObject searchResult = new JSONObject(JSONResult);
         return searchResult.getJSONArray(arrayField);
@@ -21,64 +29,49 @@ public class JSONParser {
         return japanese.getJSONObject(translatingWordOrder);
     }
 
-    public static String getWord(String JSONResult, int translatedWordOrder, int translatingWordOrder){
-        JSONObject translation = null;
-        String word;
+    private static String getThirdArrayStringFromJSONParser(String JSONResult, int translatedWordOrder, int translatingWordOrder, String generalArray, String internalArray, String thirdArray){
+        resetInitialValues();
         try {
-            translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder, "data", "japanese");
-            word = translation.getString("word");
+            JSONObject definitionObject = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder,generalArray, internalArray);
+            JSONArray englishDefinition = definitionObject.getJSONArray(thirdArray);
+            localArrayLength = englishDefinition.length();
+            if (localArrayLength > 0){
+                resultString = englishDefinition.getString(0);
+                for (int i = 1; i< localArrayLength; i++){
+                    resultString = resultString +  "\n" + englishDefinition.getString(i);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
-            word = "";
         }
-        return word;
+        return resultString;
+    }
+
+    private static String getThirdStringFromJSONParser(String JSONResult, int translatedWordOrder, int translatingWordOrder, String generalArray, String internalArray, String thirdLevelString){
+        resetInitialValues();
+        try {
+            JSONObject translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder,generalArray,internalArray);
+            resultString = translation.getString(thirdLevelString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  resultString;
+    }
+
+    public static String getWord(String JSONResult, int translatedWordOrder, int translatingWordOrder){
+        return getThirdStringFromJSONParser(JSONResult,translatedWordOrder,translatingWordOrder,"data","japanese","word");
     }
 
     public static String getReading(String JSONResult, int translatedWordOrder, int translatingWordOrder){
-        JSONObject translation = null;
-        String reading;
-        try {
-            translation = finalTranslatedWordObject(JSONResult,translatedWordOrder,translatingWordOrder,"data","japanese");
-            reading = translation.getString("reading");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            reading = "";
-        }
-        return reading;
+        return getThirdStringFromJSONParser(JSONResult,translatedWordOrder,translatingWordOrder,"data","japanese","reading");
     }
 
     public static String getDefinition(String JSONResult, int translatedWordOrder, int englishDefinitionOrder){
-        String definitions = new String("");
-        try {
-            JSONObject definitionObject = finalTranslatedWordObject(JSONResult,translatedWordOrder,englishDefinitionOrder,"data","senses");
-            JSONArray englishDefinition = definitionObject.getJSONArray("english_definitions");
-            for (int i=0; i<englishDefinition.length(); i++){
-                definitions = definitions + englishDefinition.getString(i) + "\n";
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return definitions;
+        return getThirdArrayStringFromJSONParser(JSONResult,translatedWordOrder,englishDefinitionOrder,"data","senses","english_definitions");
     }
 
     public static String getTag(String JSONResult, int translatedWordOrder, int englishDefinitionOrder){
-        String tags = new String("");
-        try {
-            JSONObject tagObject = finalTranslatedWordObject(JSONResult,translatedWordOrder,englishDefinitionOrder,"data","senses");
-            JSONArray englishTag = tagObject.getJSONArray("tags");
-            for (int i=0; i<englishTag.length(); i++){
-                tags = tags + englishTag.getString(i) + "\n";
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return tags;
-    }
-
-    public static String getFirstTranslation(String JSONResult) throws JSONException {
-        String result = new String("");
-        result = "Word\n" + getWord(JSONResult,0,0) + "\n\nReading\n" + getReading(JSONResult,0,0) + "\n\nEnglishDefinition\n" + getDefinition(JSONResult,0,0);
-        return result;
+        return getThirdArrayStringFromJSONParser(JSONResult,translatedWordOrder,englishDefinitionOrder,"data","senses","tags");
     }
 
     public static int getTranslationResultsNumber(String JSONResult) throws JSONException {
