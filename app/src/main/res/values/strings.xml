@@ -12,6 +12,7 @@
     <string name="menu_main">Samuraj</string>
     <string name="menu_text">Informacja</string>
     <string name="menu_translate">Translator</string>
+    <string name="menu_extra">Dodatki</string>
 
 
     <string name="kpt1">Podobnie jak i wiele innych postaci z książek Milne’a, Kubuś Puchatek został nazwany imieniem jednej z zabawek Christophera Robina Milne’a (1920-1996), syna pisarza.</string>
@@ -43,5 +44,9 @@
     <string name="trans_word">Tłumaczenie</string>
     <string name="trans_reading">Czytanie</string>
     <string name="trans_no_connection">Nie można nawiązać połączenia</string>
+    
+    
+    <string name="extra_blog_button">Historia pewnej samurajko</string>
+    <string name="extra_map_japan">Kraj Wschodzącego Słońca</string>
 
 </resources>

@@ -113,6 +113,11 @@ public class GeneralActivity extends AppCompatActivity{
             Log.i(logTags.MENU,translateActivityIntent.getComponent().toString() + " selected");
             startActivity(translateActivityIntent);
             return true;
+        case R.id.menu_item_extra:
+            Intent extraActivityIntent = new Intent(this,ExtrasActivity.class);
+            Log.i(logTags.MENU,extraActivityIntent.getComponent().toString() + " selected");
+            startActivity(extraActivityIntent);
+            return true;
         default:
             return super.onOptionsItemSelected(item);
     }
