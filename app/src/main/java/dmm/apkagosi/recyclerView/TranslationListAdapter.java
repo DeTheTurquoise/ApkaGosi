@@ -18,6 +18,13 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
 
     private int numberOfResultsToDisplay;
     final private ListItemClickListener clickListener;
+    private String[] jishoWord;
+    private String[] jishoReading;
+    private String[] jishoDefinition;
+    private String[] jishoTags;
+    private TextView translationReading;
+    private TextView translationText;
+    private TextView translationDefinition;
 
     public void setJishoWord(String[] jishoWord, String[] jishoReading, String[]jishoDefinition, int numberOfResultsToDisplay) {
         this.jishoWord = jishoWord;
@@ -25,11 +32,6 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
         this.jishoDefinition = jishoDefinition;
         this.numberOfResultsToDisplay = numberOfResultsToDisplay;
     }
-
-    private String[] jishoWord;
-    private String[] jishoReading;
-    private String[] jishoDefinition;
-    private String[] jishoTags;
 
 
     /**
@@ -93,11 +95,6 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
             translationDefinition = (TextView) itemView.findViewById(R.id.translate_description);
             itemView.setOnClickListener(this);
         }
-
-        private TextView translationReading;
-        private TextView translationText;
-        private TextView translationDefinition;
-
 
         /**
          * Displays number of translation result in order

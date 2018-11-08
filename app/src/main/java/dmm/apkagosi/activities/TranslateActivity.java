@@ -1,13 +1,15 @@
 package dmm.apkagosi.activities;
 
+import android.app.LoaderManager;
+import android.content.Loader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,13 +29,10 @@ import dmm.apkagosi.recyclerView.TranslationListAdapter;
  * Created by ddabrowa on 2017-05-17.
  */
 
-public class TranslateActivity extends GeneralActivity implements TranslationListAdapter.ListItemClickListener{
+public class TranslateActivity extends GeneralActivity implements TranslationListAdapter.ListItemClickListener, LoaderManager.LoaderCallbacks<String> {
     private EditText textToTranslate;
     private TextView errorMessage;
     private ProgressBar waitingForConnection;
-    private String japaneseWord[];
-    private String japaneseReading[];
-    private String japaneseDescription[];
     private String japaneseTags[];
     private static final int NUMBER_OF_RESULT_TO_DISPLAY = 10;
     private int numberOfResultsToDisplay;
@@ -41,27 +40,30 @@ public class TranslateActivity extends GeneralActivity implements TranslationLis
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     private Toast tagsFromJisho;
+    private String queryResponse = null;
+    private URL jishoUrl;
+    private static final String SEARCH_QUERY = "";
+    private static final String SEARCH_RESULT = "";
+    private View fakeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.translate_screen);
         prepareScreen();
-        textToTranslate.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                search();
-            }
-        });
+        if (savedInstanceState != null){
+                String tempUrl = savedInstanceState.getString(SEARCH_QUERY);
+            jishoUrl = NetworkUtils.stringToUrl(tempUrl);
+                queryResponse = savedInstanceState.getString(SEARCH_RESULT);
+        }
         Log.i("Info","TranslateActivity created");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(SEARCH_RESULT,queryResponse);
+        savedInstanceState.putString(SEARCH_QUERY,jishoUrl.toString());
     }
 
     private void prepareScreen(){
@@ -72,15 +74,25 @@ public class TranslateActivity extends GeneralActivity implements TranslationLis
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         translationListAdapter = new TranslationListAdapter(numberOfResultsToDisplay, this);
+        textToTranslate.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search(fakeView);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     /**
      * Method used to connect to the jisho
      * App performes it when user enters text
      */
-    public void search(){
-        String searchQuery = textToTranslate.getText().toString();
-        URL jishoUrl = NetworkUtils.buildUrl(searchQuery);
+    public void search(View view){
+        String wordToSearch = textToTranslate.getText().toString();
+        jishoUrl = NetworkUtils.buildUrl(wordToSearch);
         Log.i(logTags.RESULT, "URL = " + jishoUrl.toString());
         new JishoSearch().execute(jishoUrl);
     }
@@ -112,6 +124,22 @@ public class TranslateActivity extends GeneralActivity implements TranslationLis
         }
     }
 
+    @Override
+    public Loader<String> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+
+    }
+
+
     public class JishoSearch extends AsyncTask<URL, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -122,23 +150,23 @@ public class TranslateActivity extends GeneralActivity implements TranslationLis
         @Override
         protected String doInBackground(URL... params) {
             URL searchUrl = params[0];
-            String searchResults = null;
+            queryResponse = null;
             try {
-                searchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+                queryResponse = NetworkUtils.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return searchResults;
+            return queryResponse;
         }
 
         @Override
-        protected void onPostExecute(String searchResults){
+        protected void onPostExecute(String queryResponse){
             waitingForConnection.setVisibility(View.INVISIBLE);
-            if (searchResults != null && !searchResults.equals("")) {
+            if (queryResponse != null && !queryResponse.equals("")) {
                 displaySearchResult();
                 int numberOfResults = 0;
                 try {
-                    numberOfResults = JSONParser.getTranslationResultsNumber(searchResults);
+                    numberOfResults = JSONParser.getTranslationResultsNumber(queryResponse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -148,15 +176,14 @@ public class TranslateActivity extends GeneralActivity implements TranslationLis
                 else {
                     numberOfResultsToDisplay = NUMBER_OF_RESULT_TO_DISPLAY;
                 }
-                japaneseWord = JSONParser.getWords(searchResults, numberOfResultsToDisplay);
-                japaneseReading = JSONParser.getReadings(searchResults,numberOfResultsToDisplay);
-                japaneseDescription = JSONParser.getDefinitions(searchResults,numberOfResultsToDisplay);
-                japaneseTags = JSONParser.getTags(searchResults,numberOfResultsToDisplay);
+                String[] japaneseWord = JSONParser.getWords(queryResponse, numberOfResultsToDisplay);
+                String[] japaneseReading = JSONParser.getReadings(queryResponse, numberOfResultsToDisplay);
+                String[] japaneseDescription = JSONParser.getDefinitions(queryResponse, numberOfResultsToDisplay);
+                japaneseTags = JSONParser.getTags(queryResponse,numberOfResultsToDisplay);
                 recyclerView.clearOnScrollListeners();
                 translationListAdapter.setJishoWord(japaneseWord, japaneseReading, japaneseDescription, numberOfResultsToDisplay);
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(translationListAdapter);
-
             }
             else {
                 errorMessage.setText(R.string.trans_no_connection);
@@ -165,4 +192,5 @@ public class TranslateActivity extends GeneralActivity implements TranslationLis
         }
 
     }
+
 }

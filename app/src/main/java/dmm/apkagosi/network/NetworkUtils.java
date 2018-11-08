@@ -36,6 +36,17 @@ public class NetworkUtils {
         return url;
     }
 
+    public static URL stringToUrl(String stringToConversion){
+        Uri buildUri = Uri.parse(stringToConversion);
+        URL url = null;
+        try {
+            url = new URL(buildUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
     /**
      * This method returns the entire result from the HTTP response.
      *
